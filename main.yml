@@ -1,0 +1,70 @@
+- name: Create project for global workshop content
+  k8s:
+    api_version: v1
+    kind: Namespace
+    name: "{{ meta.name }}"
+- name: Create a Service object from an inline definition
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: apache
+        namespace: "{{ meta.name }}"
+        labels:
+          app: apache
+          service: apache
+      spec:
+        selector:
+          app: apache
+        ports:
+        - name: "8080"
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+        type: ClusterIP
+- name: Create route object
+  k8s:
+    state: present
+    definition: 
+     apiVersion: v1
+     kind: Route
+     metadata:
+      labels: 
+        app: apache
+      name: apache
+      namespace: "{{ meta.name }}"
+     spec:
+      port:
+       targetPort: 8080
+      to:
+       kind: Service
+       name: apache
+    
+- name: Deploy a web server
+  k8s:
+    api_version: v1
+    namespace: "{{ meta.name }}"
+    definition:
+      kind: Deployment
+      metadata:
+        labels:
+          app: apache
+        name: apache
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: apache
+        template:
+          metadata:
+            labels:
+              app: apache
+          spec:
+            containers:
+               - name: apache
+                 image: quay.io/anandpavithran/infosys:1.0
+                 ports:
+                   - containerPort: 8080
+                     protocol: TCP
