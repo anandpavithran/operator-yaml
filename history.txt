@@ -1,0 +1,62 @@
+    1  tar -C /usr/local -xzf  /home/student/Downloads/go1.17.6.linux-amd64.tar.gz 
+    2  vim /root/.bash_profile
+    3  source /root/.bash_profile
+    4  mkdir -p $GOPATH/src/github.com/operator-framework
+    5   cd $GOPATH/src/github.com/operator-framework
+    6   git clone https://github.com/operator-framework/operator-sdk
+    7  cd operator-sdk/
+    8   git checkout tags/v0.19.4 -b v0.19.4
+    9  make tidy
+   10  dnf install make -y
+   11  rm /home/student/Downloads/go1.17.6.linux-amd64.tar.gz 
+   12  make tidy
+   13  make install
+   14  CD
+   15  cd
+   16  operator-sdk new web --kind=Web --api-version=web.operator.io/v1 --type=ansible 
+   17  cd web/
+   18  gedit roles/web/tasks/main.yml 
+   19   operator-sdk build quay.io/anandpavithran/web --image-builder podman
+   20  ls
+   21  ls deploy/
+   22  vim deploy/operator.yaml 
+   23  lab operators-review start
+   24  lab operators-review finish
+   25  oc login https://api.ocp4.example.com:6443 -u admin -p redhat
+   26  oc get clusterrole clusteradmin -o yaml > deploy/role.yaml 
+   27  oc get clusterrole cluster-admin -o yaml > deploy/role.yaml 
+   28  vim deploy/role.yaml 
+   29  oc get project default 
+   30  oc get project default -o yaml
+   31  oc get project default -o yaml > deploy/project.yaml
+   32  vim deploy/project.yaml 
+   33  operator-sdk generate csv --csv-version 1.0.0 --interactive=true
+   34  ls deploy/
+   35  cp deploy/role.yaml deploy/olm-catalog/web/manifests/
+   36  cp deploy/project.yaml deploy/olm-catalog/web/manifests/
+   37  operator-sdk bundle create --generate-only
+   38  ls
+   39  podman build -f bundle.Dockerfile -t quay.io/anandpavithran/web-bundle:1.0.0 .
+   40  podman images
+   41  podman login quay.io -u anandpavithran -p r1e2d3h4a5t6
+   42  podman push quay.io/anandpavithran/web-bundle:1.0.0
+   43  opm alpha bundle validate --tag quay.io/anandpavithran/web-bundle:1.0.0 --image-builder podman
+   44  podman images
+   45  opm alpha bundle validate --tag quay.io/anandpavithran/web-bundle:1.0.0 --image-builder podman --skip-tls
+   46  opm index add --bundles quay.io/anandpavithran/web-bundle:1.0.0 --tag quay.io/anandpavithran/operator-registry:0.1-RC --build-tool podman
+   47  podman push quay.io/anandpavithran/operator-registry:0.1-RC
+   48  ls
+   49  gedit /root/catalogsource.yaml
+   50  oc get catalogsource -n openshift-marketplace
+   51  oc create -f /root/catalogsource.yaml 
+   52  gedit /root/catalogsource.yaml
+   53  oc create -f /root/catalogsource.yaml 
+   54  oc get catalogsource -n openshift-marketplace
+   55  oc whoami --show-console
+   56  oc proejcts
+   57  oc projects
+   58  oc project weboperator 
+   59  oc get sa
+   60  oc get all
+   61  history 
+   62  history  > /root/history.txt
