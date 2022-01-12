@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+ name: yourname-catalog-source
+ namespace: openshift-marketplace
+spec:
+ displayName: yourname-catalog-source
+ image: quay.io/yourname/operator-registry:0.1-RC
+ publisher: yourname
+ sourceType: grpc
