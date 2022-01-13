@@ -60,3 +60,40 @@
    60  oc get all
    61  history 
    62  history  > /root/history.txt
+
+operator-sdk generate packagemanifests --version 1.0.0  --interactive
+  118  ls deploy/
+  119  cd deploy/olm-catalog/web/1.0.0/
+  120  ls
+  121  cp /root/olm-catalog/web/manifests/role.yaml .
+  122  cp /root/olm-catalog/web/manifests/role_binding.yaml .
+  123  ls
+  124  cd ..
+  125  cd 1.0.0/
+  126  cp /root/olm-catalog/web/manifests/service_account.yaml .
+  127  cd ..
+  128  ls
+  129  operator-sdk run packagemanifests --operator-version 1.0.0 --operator-namespace weboperator --olm-namespace openshift-operator-lifecycle-manager
+  130  ls -l deploy/olm-catalog/web/1.0.0/
+  131  oc project
+  132  oc login https://api.ocp4.example.com:6443 -u admin -p redhat
+  133  operator-sdk run packagemanifests --operator-version 1.0.0 --operator-namespace weboperator --olm-namespace openshift-operator-lifecycle-manager
+  134  oc new-project weboperator
+  135  operator-sdk run packagemanifests --operator-version 1.0.0 --operator-namespace weboperator --olm-namespace openshift-operator-lifecycle-manager
+  136  oc get catalogsource,pod -n openshift-marketplace
+  137  oc get sub
+  138  oc project default
+  139  oc get sub
+  140  oc get packagemanifest
+  141  oc get packagemanifest | grep web
+  142  oc get packagemanifest -n weboperator| grep web
+  143  oc get web
+  144  oc project weboperator
+  145  oc get web
+  146  oc get packagemanifest -n weboperator| grep web
+  147  oc get sub
+  148  operator-sdk pkgman-to-bundle
+  149  operator-sdk
+  150  operator-sdk cleanup packagemanifests --operator-version 1.0.0 --operator-namespace weboperator --olm-namespace openshift-operator-lifecycle-manager
+  151  history > /root/a.txt
+~                                                                                                                                        
