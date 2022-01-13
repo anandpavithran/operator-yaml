@@ -1,12 +1,12 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
- name: yourname-catalog-source
+ name: anandpavithran-catalog-source
  namespace: openshift-marketplace
 spec:
- displayName: yourname-catalog-source
- image: quay.io/yourname/operator-registry:0.1-RC
- publisher: yourname
+ displayName: anandpavithran-catalog-source
+ image: quay.io/anandpavithran/operator-registry:0.1-RC
+ publisher: anandpavithran
  sourceType: grpc
  updateStrategy:
     registryPoll: 

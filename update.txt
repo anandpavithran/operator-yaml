@@ -1,0 +1,42 @@
+ 82  vim roles/web/tasks/main.yml 
+   83  ===================
+   84  operator-sdk generate csv --csv-version 2.0.0 --interactive=true
+   85  cd deploy/olm-catalog/web/manifests/
+   86  ls
+   87  cp service_account.yaml service_account1.yaml 
+   88  vim service_account1.yaml 
+   89  #operator-sdk bundle create --generate-only
+   90  cd 
+   91  cd web/
+   92  operator-sdk bundle create --generate-only
+   93  podman build -f bundle.Dockerfile -t quay.io/anandpavithran/web-bundle:2.0.0 .
+   94  podman push quay.io/anandpavithran/web-bundle:2.0.0
+   95  opm index add --bundles quay.io/anandpavithran/web-bundle:2.0.0 --from-index quay.io/anandpavithran/operator-registry:0.1-RC --build-tool podman--tag quay.io/anandpavithran/operator-registry:0.1-RC --build-tool podman
+   96  opm index add --bundles quay.io/anandpavithran/web-bundle:2.0.0 --from-index quay.io/anandpavithran/operator-registry:0.1-RC --tag quay.io/anandpavithran/operator-registry:0.1-RC --build-tool podman
+   97  podman push quay.io/anandpavithran/operator-registry:0.1-RC
+   98  oc get installplan
+   99  oc get sa
+  100  sleep 180
+  101  oc get installplan
+  102  oc get sa
+  103  oc get pod -n example-web
+  104  vim roles/web/tasks/main.yml 
+  105  history 
+  106  vim bundle.Dockerfile 
+  107  ###################################
+  108  operator-sdk build quay.io/anandpavithran/web --image-builder podman 
+  109  podman push quay.io/anandpavithran/web
+  110     84  operator-sdk generate csv --csv-version 2.0.0 --interactive=true
+  111  operator-sdk generate csv --csv-version 3.0.0 --interactive=true
+  112  cp deploy/olm-catalog/web/manifests/service_account1.yaml deploy/olm-catalog/web/manifests/service_account2.yaml
+  113  vim deploy/olm-catalog/web/manifests/service_account2.yaml 
+  114  operator-sdk bundle create --generate-only
+  115     93  podman build -f bundle.Dockerfile -t quay.io/anandpavithran/web-bundle:2.0.0 .
+  116   podman build -f bundle.Dockerfile -t quay.io/anandpavithran/web-bundle:2.0.0 .
+  117   podman build -f bundle.Dockerfile -t quay.io/anandpavithran/web-bundle:3.0.0 .
+  118  podman push quay.io/anandpavithran/web-bundle:3.0.0
+  119  96  opm index add --bundles quay.io/anandpavithran/web-bundle:2.0.0 --from-index quay.io/anandpavithran/operator-registry:0.1-RC --tag quay.io/anandpavithran/operator-registry:0.1-RC --build-tool podman
+  120   opm index add --bundles quay.io/anandpavithran/web-bundle:3.0.0 --from-index quay.io/anandpavithran/operator-registry:0.1-RC --tag quay.io/anandpavithran/operator-registry:0.1-RC --build-tool podman
+  121  history 
+[root@workstation web]# 
+
