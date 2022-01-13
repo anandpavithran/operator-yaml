@@ -8,3 +8,6 @@ spec:
  image: quay.io/yourname/operator-registry:0.1-RC
  publisher: yourname
  sourceType: grpc
+ updateStrategy:
+    registryPoll: 
+      interval: 3m0s
