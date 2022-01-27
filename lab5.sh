@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##################
-RUN AS ROOT USER
+#RUN AS ROOT USER
 ##################
 echo Enter your name:
 read var1
