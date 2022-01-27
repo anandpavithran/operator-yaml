@@ -9,7 +9,7 @@ then
 cd /root/web;
 operator-sdk build quay.io/$var1/web --image-builder podman 
 podman push quay.io/$var1/web:latest
-sed -i 's/REPLACE_IMAGE/quay.io\/$var1\/web/g' /root/web/deploy/operator.yaml
+sed -i "s/REPLACE_IMAGE/quay.io\/$var1\/web/g" /root/web/deploy/operator.yaml
 else
 echo "Something goes wrong"
 fi
